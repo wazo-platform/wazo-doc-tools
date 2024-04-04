@@ -37,7 +37,6 @@ Backup location:
 Here is the list of folders and files that are backed-up:
 
 - `/etc/asterisk/`
-tar xvfp /var/tmp/db-manual.tgz -C /var/tmp
 - `/etc/crontab`
 - `/etc/dhcp/`
 - `/etc/hostname`
@@ -201,7 +200,7 @@ tar xvf /var/backups/wazo/db.tgz -C /var/tmp
 Or from the manual backup :
 
 ```shell
-tar xvfp /var/tmp/db-manual.tgz -C /var/tmp
+tar xvf /var/tmp/db-manual.tgz -C /var/tmp
 ```
 
 Drop the asterisk database and restore it with the one from the backup:
