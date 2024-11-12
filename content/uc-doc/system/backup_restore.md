@@ -164,6 +164,13 @@ To restore the file :
 tar xvfp /var/backups/wazo/data.tgz -C /
 ```
 
+Or from the manual backup :
+
+```shell
+tar xvfp /var/tmp/data-manual.tgz -C /
+```
+
+
 Once the database and files have been restored, you can
 [finalize the restore](/uc-doc/system/backup_restore#after-restore)
 
@@ -187,15 +194,20 @@ First, extract the content of the `db.tgz` file into the `/var/tmp` directory an
 newly created directory:
 
 ```shell
-tar xvf db.tgz -C /var/tmp
-cd /var/tmp/pg-backup
+tar xvf /var/backups/wazo/db.tgz -C /var/tmp
+```
+
+Or from the manual backup :
+
+```shell
+tar xvf /var/tmp/db-manual.tgz -C /var/tmp
 ```
 
 Drop the asterisk database and restore it with the one from the backup:
 
 ```shell
 sudo -u postgres dropdb asterisk
-sudo -u postgres pg_restore -C -d postgres asterisk-*.dump
+sudo -u postgres pg_restore -C -d postgres /var/tmp/pg-backup/asterisk-*.dump
 ```
 
 Remove the cache files generated from the previous database:
@@ -226,7 +238,7 @@ sudo -u postgres psql -c 'ALTER DATABASE asterisk RENAME TO asterisk_previous'
 Restore the asterisk database from the backup:
 
 ```shell
-sudo -u postgres pg_restore -C -d postgres asterisk-*.dump
+sudo -u postgres pg_restore -C -d postgres /var/tmp/pg-backup/asterisk-*.dump
 ```
 
 Restore the system configuration tables from the asterisk_previous database:
