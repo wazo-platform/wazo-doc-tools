@@ -27,12 +27,6 @@ const generatePages = async ({ plugins, actions }) => {
     });
   });
 
-  // Create vendors page
-  // await newPage('/uc-doc/ecosystem/supported_devices', 'provisioning/vendors', {
-  //   plugins,
-  //   images: imgs,
-  // });
-
   // Create external page
   await actions.addRoute({
     path: '/provisioning/external/',
@@ -82,14 +76,14 @@ const generatePages = async ({ plugins, actions }) => {
 
 
 export default async (context, options) => ({
-    name: "provisioning-pages-build",
+  name: "provisioning-pages-build",
 
-    async loadContent() {
-      const plugins = getProvisioningPlugins();
-      return { plugins } ;
-    },
+  async loadContent() {
+    const plugins = getProvisioningPlugins();
+    return { plugins } ;
+  },
 
-    async contentLoaded({ content, actions }) {
-      await generatePages({ plugins: content.plugins, actions });
-    },
+  async contentLoaded({ content, actions }) {
+    await generatePages({ plugins: content.plugins, actions });
+  },
 })
