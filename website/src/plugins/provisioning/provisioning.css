@@ -2,11 +2,27 @@
 .provisioning-phone,
 .provisioning-vendors,
 .provisioning-vendor {
+  padding: 40px 0;
+
+  &.provisioning-vendors-external { padding: 0; }
+
   .card {
     margin-bottom: 20px;
-    a.card-header {
-      color: #777;
+    &:hover, &:active {
+      a.card__header {
+        background-color: rgba(0,0,0,1);
+        color: #FFF;
+      }
     }
+
+    a.card__header {
+      transition: 200ms color ease, 200ms background ease;
+      color: #777;
+      background-color: rgba(0,0,0,.03);
+      padding: 10px 16px;
+      text-decoration: none;
+    }
+
     .body {
       display: flex;
       align-items: center;
@@ -173,10 +189,18 @@
       width: 100%;
     }
   }
+
+  table.table {
+    display: table;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
   pre {
     white-space: pre;
     margin-bottom: 0;
   }
+
   .row {
     align-items: stretch;
   }

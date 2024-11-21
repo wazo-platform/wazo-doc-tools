@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { exec } = require('child_process');
-const path = require('path');
 
 const { getProvisioningPlugins, walk } = require('./utils');
 const slugify = require('./slugify');
@@ -35,7 +34,6 @@ const generatePages = async ({ plugins, actions }) => {
   // });
 
   // Create external page
-  // await newPage('/provisioning/external', 'provisioning/external', { plugins, images: imgs });
   await actions.addRoute({
     path: '/provisioning/external/',
     component: "@site/src/plugins/provisioning/External.tsx",
@@ -45,31 +43,41 @@ const generatePages = async ({ plugins, actions }) => {
 
 
   // Create vendor pages
-  // await Promise.all(
-  //   Object.keys(plugins).map(vendor =>
-  //     newPage(`/provisioning/${slugify(vendor)}`, 'provisioning/vendor', {
-  //       name: vendor,
-  //       vendor_plugins: plugins[vendor],
-  //       vendor_images: imgs[slugify(vendor)],
-  //     })
-  //   )
-  // );
+  await Promise.all(
+    Object.keys(plugins).map(vendor =>
+      actions.addRoute({
+        path: `/provisioning/${slugify(vendor)}`,
+        component: "@site/src/plugins/provisioning/Vendor.tsx",
+        exact: true,
+        customData: {
+          name: vendor,
+          vendor_plugins: plugins[vendor],
+          vendor_images: images[slugify(vendor)],
+        }
+      })
+    )
+  );
 
   // Create phone pages
-  // const phonePagesPromises = [];
-  // Object.keys(plugins).forEach(vendor => {
-  //   Object.keys(plugins[vendor]).forEach(name => {
-  //     phonePagesPromises.push(
-  //       newPage(`/provisioning/${slugify(vendor)}/${slugify(name)}`, 'provisioning/phone', {
-  //         name,
-  //         vendor,
-  //         phone: plugins[vendor][name],
-  //         vendor_images: imgs[slugify(vendor)],
-  //       })
-  //     );
-  //   });
-  // });
-  // await Promise.all[phonePagesPromises];
+  const phonePagesPromises = [];
+  Object.keys(plugins).forEach(vendor => {
+    Object.keys(plugins[vendor]).forEach(phone => {
+      phonePagesPromises.push(
+        actions.addRoute({
+          path: `/provisioning/${slugify(vendor)}/${slugify(phone)}`,
+          component: "@site/src/plugins/provisioning/Phone.tsx",
+          exact: true,
+          customData: {
+            name: phone,
+            vendor,
+            phone: plugins[vendor][phone],
+            vendor_images: images[slugify(vendor)],
+          }
+        })
+      );
+    });
+  });
+  await Promise.all[phonePagesPromises];
 };
 
 
