@@ -2,6 +2,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 import REDIRECTS from './redirects';
+import pluginsProvisioningInit from './src/plugins/provisioning/builder/index';
 
 const config: Config = {
   title: 'Wazo Platform',
@@ -172,6 +173,7 @@ const config: Config = {
         redirects: REDIRECTS,
       },
     ],
+    pluginsProvisioningInit
   ],
 };
 
