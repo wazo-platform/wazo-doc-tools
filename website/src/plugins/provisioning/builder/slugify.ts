@@ -1,5 +1,5 @@
 // @see: gist.github.com/mathewbyrne/1280286
-module.exports = (text) =>
+export default (text: string) =>
   text.toString().toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '')

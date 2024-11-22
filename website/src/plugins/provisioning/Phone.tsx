@@ -9,7 +9,18 @@ import Head from '@docusaurus/Head';
 
 const VENDORS_URL = '/uc-doc/ecosystem/supported_devices';
 
-const PhonePage = ({ route }) => {
+type Props = {
+  route: {
+    customData?: {
+      name: string;
+      vendor: string;
+      phone: Record<string, any>
+      vendor_images: Record<string, any>
+    }
+  },
+};
+
+const PhonePage = ({ route }: Props) => {
   const { name, vendor, phone, vendor_images } = route?.customData || {};
 
   const breadcrumbs = [

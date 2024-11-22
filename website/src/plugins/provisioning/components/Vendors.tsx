@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { buildTable } from '../helpers';
 import slugify from '../builder/slugify'
 
-const Page = ({ plugins, images }) => {
+type Props = {
+  plugins: Record<string, any>,
+  images: Record<string, any>,
+};
+
+const Page = ({ plugins, images }: Props) => {
   const [currentVendor, setCurrentVendor] = useState(null);
   const [currentDevice, setCurrentDevice] = useState(null);
 

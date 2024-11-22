@@ -1,10 +1,20 @@
-const fs = require('fs');
-const { exec } = require('child_process');
+import fs from 'fs';
+import { exec } from 'child_process';
 
-const { getProvisioningPlugins, walk } = require('./utils');
-const slugify = require('./slugify');
+import { getProvisioningPlugins, walk } from './utils';
+import slugify from './slugify';
+import { PluginContentLoadedActions, PluginModule } from '@docusaurus/types';
 
-const generatePages = async ({ plugins, actions }) => {
+type LoadedContent = {
+  plugins: Record<string, unknown>;
+};
+
+type GeneratePagesOpts = {
+  plugins: LoadedContent['plugins'],
+  actions: PluginContentLoadedActions
+};
+
+const generatePages = async ({ plugins, actions }: GeneratePagesOpts) => {
   // Retrieve images
   const destPath = './static/provisioning/';
   exec(`mkdir -p ${destPath}`);
@@ -28,7 +38,7 @@ const generatePages = async ({ plugins, actions }) => {
   });
 
   // Create external page
-  await actions.addRoute({
+  actions.addRoute({
     path: '/provisioning/external/',
     component: "@site/src/plugins/provisioning/External.tsx",
     exact: true,
@@ -37,45 +47,39 @@ const generatePages = async ({ plugins, actions }) => {
 
 
   // Create vendor pages
-  await Promise.all(
-    Object.keys(plugins).map(vendor =>
+  Object.keys(plugins).forEach(vendor =>
+    actions.addRoute({
+      path: `/provisioning/${slugify(vendor)}`,
+      component: "@site/src/plugins/provisioning/Vendor.tsx",
+      exact: true,
+      customData: {
+        name: vendor,
+        vendor_plugins: plugins[vendor],
+        vendor_images: images[slugify(vendor)],
+      }
+    })
+  )
+
+  // Create phone pages
+  Object.keys(plugins).forEach(vendor => {
+    Object.keys(plugins[vendor]).forEach(phone => {
       actions.addRoute({
-        path: `/provisioning/${slugify(vendor)}`,
-        component: "@site/src/plugins/provisioning/Vendor.tsx",
+        path: `/provisioning/${slugify(vendor)}/${slugify(phone)}`,
+        component: "@site/src/plugins/provisioning/Phone.tsx",
         exact: true,
         customData: {
-          name: vendor,
-          vendor_plugins: plugins[vendor],
+          name: phone,
+          vendor,
+          phone: plugins[vendor][phone],
           vendor_images: images[slugify(vendor)],
         }
       })
-    )
-  );
-
-  // Create phone pages
-  const phonePagesPromises = [];
-  Object.keys(plugins).forEach(vendor => {
-    Object.keys(plugins[vendor]).forEach(phone => {
-      phonePagesPromises.push(
-        actions.addRoute({
-          path: `/provisioning/${slugify(vendor)}/${slugify(phone)}`,
-          component: "@site/src/plugins/provisioning/Phone.tsx",
-          exact: true,
-          customData: {
-            name: phone,
-            vendor,
-            phone: plugins[vendor][phone],
-            vendor_images: images[slugify(vendor)],
-          }
-        })
-      );
     });
   });
-  await Promise.all[phonePagesPromises];
 };
 
 
-export default async (context, options) => ({
+const plugin: PluginModule<LoadedContent> = async () => ({
   name: "provisioning-pages-build",
 
   async loadContent() {
@@ -87,3 +91,6 @@ export default async (context, options) => ({
     await generatePages({ plugins: content.plugins, actions });
   },
 })
+
+
+export default plugin;

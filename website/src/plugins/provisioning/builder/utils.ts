@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
 
 let cachedPlugins = null;
 
-export const walk = (basePath, regexp, encoding = 'utf8', custom = false) => {
+export const walk = (basePath: string, regexp: RegExp, encoding = 'utf8', custom = false) => {
   const files = fs.readdirSync(basePath);
   const dirname = basePath.split('/').pop();
   let results = { [dirname]: {} };
@@ -24,7 +24,7 @@ export const walk = (basePath, regexp, encoding = 'utf8', custom = false) => {
     } else if (file.match(regexp)) {
       // HEADS UP: hard code
       const wazo_plugin = `${basePath.split('/')[4]}-${basePath.split('/')[5]}`;
-      const content = fs.readFileSync(filePath, encoding);
+      const content = fs.readFileSync(filePath);
       results[dirname][file] = custom ? {
           path: path.dirname(filePath),
           file: content,

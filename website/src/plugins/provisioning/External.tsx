@@ -3,7 +3,16 @@ import React from 'react';
 import Vendors from './components/Vendors';
 import './provisioning.css';
 
-const ExternalPage = ({ route }) => {
+type Props = {
+  route: {
+    customData?: {
+      plugins: Record<string, any>
+      images: Record<string, any>
+    }
+  },
+};
+
+const ExternalPage = ({ route }: Props) => {
   const { plugins, images } = route?.customData || {};
 
   return (
