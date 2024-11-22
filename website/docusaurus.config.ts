@@ -173,7 +173,7 @@ const config: Config = {
         redirects: REDIRECTS,
       },
     ],
-    pluginsProvisioningInit
+    pluginsProvisioningInit,
   ],
 };
 

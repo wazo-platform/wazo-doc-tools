@@ -1,6 +1,6 @@
-import React  from 'react';
+import React from 'react';
 
-import Layout from "@theme/Layout";
+import Layout from '@theme/Layout';
 
 import slugify from './builder/slugify';
 import { buildTable } from './helpers';
@@ -14,10 +14,10 @@ type Props = {
     customData?: {
       name: string;
       vendor: string;
-      phone: Record<string, any>
-      vendor_images: Record<string, any>
-    }
-  },
+      phone: Record<string, any>;
+      vendor_images: Record<string, any>;
+    };
+  };
 };
 
 const PhonePage = ({ route }: Props) => {
@@ -32,7 +32,7 @@ const PhonePage = ({ route }: Props) => {
   return (
     <Layout>
       <Head>
-        <title>{ breadcrumbs.map(({ label }) => label).join(' - ') }</title>
+        <title>{breadcrumbs.map(({ label }) => label).join(' - ')}</title>
       </Head>
       <div className="doc-wrapper provisioning-phone">
         <div className="container">
@@ -40,7 +40,18 @@ const PhonePage = ({ route }: Props) => {
             <div className="col col--3">
               <div className="card card--full-height">
                 <div className="body">
-                  {vendor_images && vendor_images.indexOf(`${slugify(name)}.png`) !== -1 ? <img src={`/provisioning/${slugify(vendor)}-${slugify(name)}.png`} alt={`${slugify(vendor)}-${name}`}/> : <img src='/provisioning/img-placeholder.png' alt={`${slugify(vendor)}-${name}`} />}
+                  {vendor_images &&
+                  vendor_images.indexOf(`${slugify(name)}.png`) !== -1 ? (
+                    <img
+                      src={`/provisioning/${slugify(vendor)}-${slugify(name)}.png`}
+                      alt={`${slugify(vendor)}-${name}`}
+                    />
+                  ) : (
+                    <img
+                      src="/provisioning/img-placeholder.png"
+                      alt={`${slugify(vendor)}-${name}`}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -50,6 +61,6 @@ const PhonePage = ({ route }: Props) => {
       </div>
     </Layout>
   );
-}
+};
 
 export default PhonePage;

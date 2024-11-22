@@ -1,15 +1,20 @@
-import fs from 'fs';
-import path from 'path';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 
 let cachedPlugins = null;
 
-export const walk = (basePath: string, regexp: RegExp, encoding = 'utf8', custom = false) => {
+export const walk = (
+  basePath: string,
+  regexp: RegExp,
+  encoding = 'utf8',
+  custom = false,
+) => {
   const files = fs.readdirSync(basePath);
   const dirname = basePath.split('/').pop();
   let results = { [dirname]: {} };
 
-  files.forEach(file => {
+  files.forEach((file) => {
     const filePath = `${basePath}/${file}`;
     const stat = fs.lstatSync(filePath);
 
@@ -25,11 +30,13 @@ export const walk = (basePath: string, regexp: RegExp, encoding = 'utf8', custom
       // HEADS UP: hard code
       const wazo_plugin = `${basePath.split('/')[4]}-${basePath.split('/')[5]}`;
       const content = fs.readFileSync(filePath);
-      results[dirname][file] = custom ? {
-          path: path.dirname(filePath),
-          file: content,
-          wazo_plugin,
-        } : content;
+      results[dirname][file] = custom
+        ? {
+            path: path.dirname(filePath),
+            file: content,
+            wazo_plugin,
+          }
+        : content;
     }
   });
 
@@ -52,13 +59,17 @@ export const getProvisioningPlugins = () => {
   cachedPlugins = {};
 
   // Parse plugin-info files
-  Object.keys(pluginInfoFiles).forEach(basePath => {
-    Object.keys(pluginInfoFiles[basePath]).forEach(fileName => {
+  Object.keys(pluginInfoFiles).forEach((basePath) => {
+    Object.keys(pluginInfoFiles[basePath]).forEach((fileName) => {
       try {
-        const { wazo_plugin, file, path: localPath } = pluginInfoFiles[basePath][fileName];
+        const {
+          wazo_plugin,
+          file,
+          path: localPath,
+        } = pluginInfoFiles[basePath][fileName];
         const content = JSON.parse(file);
 
-        Object.keys(content.capabilities).forEach(capabilityName => {
+        Object.keys(content.capabilities).forEach((capabilityName) => {
           const [vendor, phone, firmware] = capabilityName.split(', ');
           if (!(vendor in cachedPlugins)) {
             cachedPlugins[vendor] = {};
@@ -69,11 +80,17 @@ export const getProvisioningPlugins = () => {
 
           const installPath = `${localPath}/install.md`;
           const limitationsPath = `${localPath}/limitations.md`;
-          const install = fs.existsSync(installPath) ? fs.readFileSync(installPath, { encoding:'utf8', flag:'r' }) : null;
-          const limitations = fs.existsSync(limitationsPath) ? fs.readFileSync(limitationsPath, { encoding:'utf8', flag:'r' }) : null;
+          const install = fs.existsSync(installPath)
+            ? fs.readFileSync(installPath, { encoding: 'utf8', flag: 'r' })
+            : null;
+          const limitations = fs.existsSync(limitationsPath)
+            ? fs.readFileSync(limitationsPath, { encoding: 'utf8', flag: 'r' })
+            : null;
 
-          cachedPlugins[vendor][phone][firmware] = content.capabilities[capabilityName];
-          cachedPlugins[vendor][phone][firmware].wazo_plugin = `${wazo_plugin} (v${content.version})`;
+          cachedPlugins[vendor][phone][firmware] =
+            content.capabilities[capabilityName];
+          cachedPlugins[vendor][phone][firmware].wazo_plugin =
+            `${wazo_plugin} (v${content.version})`;
           cachedPlugins[vendor][phone][firmware].install = install;
           cachedPlugins[vendor][phone][firmware].limitations = limitations;
         });
@@ -83,7 +100,7 @@ export const getProvisioningPlugins = () => {
     });
   });
 
-  delete cachedPlugins['*'];
+  cachedPlugins['*'] = undefined;
 
   return cachedPlugins;
 };

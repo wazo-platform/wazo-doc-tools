@@ -1,24 +1,26 @@
-
 .provisioning-phone,
 .provisioning-vendors,
 .provisioning-vendor {
   padding: 40px 0;
 
-  &.provisioning-vendors-external { padding: 0; }
+  &.provisioning-vendors-external {
+    padding: 0;
+  }
 
   .card {
     margin-bottom: 20px;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       a.card__header {
-        background-color: rgba(0,0,0,1);
-        color: #FFF;
+        background-color: rgba(0, 0, 0, 1);
+        color: #fff;
       }
     }
 
     a.card__header {
       transition: 200ms color ease, 200ms background ease;
       color: #777;
-      background-color: rgba(0,0,0,.03);
+      background-color: rgba(0, 0, 0, 0.03);
       padding: 10px 16px;
       text-decoration: none;
     }
@@ -63,13 +65,13 @@
       flex-wrap: wrap;
       align-items: flex-start;
       justify-content: flex-start;
-      div{
+      div {
         flex: 0 20%;
         &.selected {
           flex: 0 100%;
           border-top: 1px solid #ccc;
           border-bottom: 1px solid #ccc;
-          > a{
+          > a {
             display: none;
             margin-bottom: 0;
             color: #444;
@@ -78,7 +80,6 @@
             letter-spacing: 0.2em;
             border-right: none;
             background-color: #fff;
-
           }
         }
 
@@ -104,16 +105,19 @@
               margin-bottom: 20px;
               font-size: 1.2em;
             }
-            img{
+            img {
               max-width: 100%;
               height: auto;
             }
           }
           .content {
+            flex: 0 100%;
+            padding: 20px;
+
             table.table {
               width: 100%;
 
-              thead{
+              thead {
                 th {
                   border-top: 0 none;
                 }
@@ -133,7 +137,7 @@
                   padding-right: 15px;
 
                   &::after {
-                    content: '+';
+                    content: "+";
                   }
                 }
 
@@ -141,7 +145,7 @@
                   background-color: #eee;
                   & .status {
                     &::after {
-                      content: '-';
+                      content: "-";
                     }
                   }
                 }
@@ -171,8 +175,6 @@
                 padding-right: 30px;
               }
             }
-            flex: 0 100%;
-            padding: 20px;
           }
         }
       }
@@ -184,7 +186,7 @@
   .col-card {
     display: flex;
     align-items: stretch;
-    .card{
+    .card {
       margin-bottom: 0;
       width: 100%;
     }

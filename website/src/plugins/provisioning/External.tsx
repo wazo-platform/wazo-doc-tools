@@ -6,10 +6,10 @@ import './provisioning.css';
 type Props = {
   route: {
     customData?: {
-      plugins: Record<string, any>
-      images: Record<string, any>
-    }
-  },
+      plugins: Record<string, any>;
+      images: Record<string, any>;
+    };
+  };
 };
 
 const ExternalPage = ({ route }: Props) => {
@@ -20,6 +20,6 @@ const ExternalPage = ({ route }: Props) => {
       <Vendors plugins={plugins} images={images} />
     </div>
   );
-}
+};
 
-export default ExternalPage
+export default ExternalPage;
