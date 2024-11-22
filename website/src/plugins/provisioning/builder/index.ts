@@ -41,14 +41,18 @@ const generatePages = async ({ plugins, actions }: GeneratePagesOpts) => {
 
   // Create external page
   actions.addRoute({
-    path: '/provisioning/external/',
+    path: '/provisioning/external',
     component: '@site/src/plugins/provisioning/External.tsx',
     exact: true,
     customData: { plugins, images },
   });
 
   // Create vendor pages
-  Object.keys(plugins).forEach((vendor) =>
+  Object.keys(plugins).forEach((vendor) => {
+    if (!plugins?.[vendor]) {
+      return;
+    }
+
     actions.addRoute({
       path: `/provisioning/${slugify(vendor)}`,
       component: '@site/src/plugins/provisioning/Vendor.tsx',
@@ -58,12 +62,12 @@ const generatePages = async ({ plugins, actions }: GeneratePagesOpts) => {
         vendor_plugins: plugins[vendor],
         vendor_images: images[slugify(vendor)],
       },
-    }),
-  );
+    });
+  });
 
   // Create phone pages
   Object.keys(plugins).forEach((vendor) => {
-    Object.keys(plugins[vendor]).forEach((phone) => {
+    Object.keys(plugins?.[vendor] || {}).forEach((phone) => {
       actions.addRoute({
         path: `/provisioning/${slugify(vendor)}/${slugify(phone)}`,
         component: '@site/src/plugins/provisioning/Phone.tsx',
