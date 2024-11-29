@@ -6,6 +6,9 @@ description: Introducing Wazo Platform
 slug: /intro
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import ThemedImage from '@theme/ThemedImage';
+
 # Introduction
 
 Wazo Platform allows developers to build solutions that fit any business and technical
@@ -13,7 +16,7 @@ requirements. Fully open source and based on open Source components, Wazo Platfo
 provide all the building blocks to create a full-featured, carrier-grade, Programmable
 Telecom Infrastructure.
 
-Wazo Platform is an Open Source project allowing to <strong>build carrier grade programmable IP communication infrastructures</strong>.
+This Open Source project allows you to <strong>build carrier grade programmable IP communication infrastructures</strong>.
 You can pick and choose the components you need to build your infrastructures with class 5 features like
 <strong>audio and video calls</strong>, chat, call centers, conferences, voicemail, etc.
 
@@ -36,11 +39,32 @@ Wazo Platform is defined by 4 layers:
   - Services and Debian: [wazo-auth](./wazo-auth), [wazo-webhookd](./wazo-webhookd), [wazo-websocketd](./wazo-websocketd), nginx, rabbitmq, postgresql
 
 <br/>
-![Technical layers](../static/images/docs/Technical_Layers_2019_V3.png)
+
+{/* @TODO: make this image readable on dark theme */}
+<ThemedImage
+  alt="Docusaurus themed image"
+  sources={{
+    light: useBaseUrl('images/docs/Technical_Layers_2019_V3.webp'),
+    dark: useBaseUrl('images/docs/Technical_Layers_2019_V3.webp'),
+  }}
+/>
+
+## History
+
+Wazo is a fork of XiVO, which was created in 2005 in France by Sylvain Boily and the company
+Proformatique. In 2010, Proformatique merged with Avencall, and Avencall acquired the copyright and
+trademark of XiVO.
+
+Sylvain then moved to Quebec City and founded Proformatique, Inc. where the XiVO core development
+team worked from 2011 until November 2016.
+
+In November 2016, Proformatique Inc. was shut down and the development team
+[forked XiVO to create Wazo](/blog/introducing-wazo). Its first release, Wazo 16.16, was released in
+December 2016.
 
 ## License
 
 You may copy, distribute and modify the software as long as you track changes/dates in source files.
 Any modifications to our software including (via compiler) GPL-licensed code must also be made available under the GPL along with build & install instructions.
 
-More details at [tldrlegal.com](<https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)>)
+More details at [tldrlegal.com](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3))
