@@ -8,6 +8,9 @@ sidebar_position: 1
 - The embedded API documentation (`https://<wazo-ip>/api`) has been removed. You can access the same
   documentation via the [API Console](https://wazo-platform.org/documentation) on the Wazo platform
   website, using your `<wazo-ip>` for local API access.
+- The configuration section names in the confbridge configuration file have been changed to use the
+  prefix `wazo_` instead of `xivo_`. If you manually modified these configuration section in
+  `/etc/asterisk/confbridge.d/*.conf` you MUST use the new names.
 
 Consult the
 [25.01 Tickets](https://wazo-dev.atlassian.net/issues/?jql=project%20%3D%20WAZO%20AND%20fixVersion%20%3D%2025.01)
