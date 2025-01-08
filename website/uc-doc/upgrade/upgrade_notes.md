@@ -11,6 +11,14 @@ sidebar_position: 1
 - The configuration section names in the confbridge configuration file have been changed to use the
   prefix `wazo_` instead of `xivo_`. If you manually modified these configuration section in
   `/etc/asterisk/confbridge.d/*.conf` you MUST use the new names.
+- The following channel variables have been renamed. If you used them in a subroutine you MUST use
+  the new name to maintain a working dialplan in the future. The old names have been kept for
+  retrocompatibility, so your dialplan should keep working for the moment. Deprecation messages will
+  appear in the Asterisk CLI if you try to modify those variables. Support for the old variables may
+  be removed in any later release.
+
+  - `XIVO_HANGUPRINGTIME` -> `WAZO_HANGUPRINGTIME`
+
 
 Consult the
 [25.01 Tickets](https://wazo-dev.atlassian.net/issues/?jql=project%20%3D%20WAZO%20AND%20fixVersion%20%3D%2025.01)
