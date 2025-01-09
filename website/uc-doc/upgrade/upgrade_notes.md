@@ -18,6 +18,7 @@ sidebar_position: 1
   be removed in any later release.
 
   - `XIVO_HANGUPRINGTIME` -> `WAZO_HANGUPRINGTIME`
+  - `XIVO_REAL_NUMBER` -> `WAZO_REAL_NUMBER`
 
 
 Consult the
