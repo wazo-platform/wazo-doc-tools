@@ -73,3 +73,4 @@ yarn-error.log
 .yarn-integrity
 
 tests/node_modules/
+static/provisioning

@@ -31,6 +31,8 @@ yarn-error.log*
 !.yarn/sdks
 !.yarn/versions
 
+static/provisioning
+
 ## temporary --- remove once static folder has been moved inside website/
 static
 static/
